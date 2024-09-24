@@ -1,3 +1,4 @@
+#include <cmath>
 #include <glad/glad.h> 
 #include <GLFW/glfw3.h> 
 #include <iostream>
@@ -8,7 +9,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height){
 
 void processInput(GLFWwindow* window){
     if(glfwGetKey(window, GLFW_KEY_ESCAPE)){
-    glfwSetWindowShouldClose(window, true);
+        glfwSetWindowShouldClose(window, true);
     }
 }
 
@@ -18,23 +19,27 @@ char infolog[512];
 
 const char* vertexShaderSource = "#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
+    "out vec4 vertexColor;\n"
     "void main()\n"
     "{\n"
     "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+    "   vertexColor = vec4(1.0f,0.0f,0.0f,1.0f);\n"
     "}\0";
 
 const char* fragShaderSource = "#version 330 core\n"
     "out vec4 FragColor;\n"
+    "uniform vec4 color;\n"
     "void main()\n"
     "{\n"
-    "   FragColor = vec4(1.0f,0.5f,0.2f,1.0f);\n"
+    "   FragColor = color;\n"
     "}\n\0";
 
 const char* fragShaderSource2 = "#version 330 core\n"
     "out vec4 FragColor;\n"
+    "uniform vec4 color;\n"
     "void main()\n"
     "{\n"
-    "   FragColor = vec4(0.0f,1.0f,0.4f,1.0f);\n"
+    "   FragColor =color;\n"
     "}\n\0";
 
 
@@ -70,6 +75,7 @@ int main() {
     vertexShader = glad_glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader,1,&vertexShaderSource,NULL);
     glCompileShader(vertexShader);
+    
     glad_glGetShaderiv(vertexShader,GL_COMPILE_STATUS,&success);
     if(!success){
     glGetShaderInfoLog(vertexShader,512,NULL,infolog);
@@ -171,24 +177,44 @@ int main() {
     glBindBuffer(GL_ARRAY_BUFFER,0);
     glBindVertexArray(0);
 
+    //------------hardware info------------
+    int nr;
+    glad_glGetIntegerv(GL_MAX_VERTEX_ATTRIBS,&nr);
+    std::cout <<"number of max attrs: "<<nr<<std::endl;
+    const GLubyte* vendor = glad_glGetString(GL_VENDOR);
+    const GLubyte* renderer = glad_glGetString(GL_RENDERER);
+    std::cout<<"gpu in use: "<<vendor<<" "<<renderer<<std::endl;
+    
     //-------------render loop---------------
     while(!glfwWindowShouldClose(window)){
         processInput(window);
 
-        glClearColor(0.1f,0.6f,0.1f,1.0f);
+        glClearColor(0.5,0.1,0.8f,1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+        glUseProgram(shaderProgram);
+
+        //update frag shader
+        float currtime = glfwGetTime();
+        float colorval = (sin(currtime)/2.0f) + 0.5f;
+        int colorLoc = glGetUniformLocation(shaderProgram,"color");
+        glUniform4f(colorLoc,0.0f,colorval,0.0f,1.0f);
+
+        glBindVertexArray(VAOone);
+        glDrawArrays(GL_TRIANGLES,0,3);
 
         glUseProgram(shaderProgram2);
-        glBindVertexArray(VAOtwo);
-        glDrawArrays(GL_TRIANGLES,0,3);
         
-        glUseProgram(shaderProgram);
-        glBindVertexArray(VAOone);
+        int colorLoc2 = glGetUniformLocation(shaderProgram2,"color");
+        glUniform4f(colorLoc2,colorval,0.0f,0.0f,1.0f);
+
+
+        glBindVertexArray(VAOtwo);
         glDrawArrays(GL_TRIANGLES,0,3);
         
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
+
     glDeleteVertexArrays(1,&VAOone);
     glDeleteVertexArrays(1,&VAOtwo);
     glDeleteBuffers(1,&VBO);
