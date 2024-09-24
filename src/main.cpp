@@ -19,19 +19,20 @@ char infolog[512];
 
 const char* vertexShaderSource = "#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
-    "out vec4 vertexColor;\n"
+    "layout (location = 1) in vec3 aColor;\n"
+    "out vec3 vertexColor;\n"
     "void main()\n"
     "{\n"
-    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-    "   vertexColor = vec4(1.0f,0.0f,0.0f,1.0f);\n"
+    "   gl_Position = vec4(aPos, 1.0);\n"
+    "   vertexColor = aColor;\n"
     "}\0";
 
 const char* fragShaderSource = "#version 330 core\n"
     "out vec4 FragColor;\n"
-    "uniform vec4 color;\n"
+    "in vec3 vertexColor;\n"
     "void main()\n"
     "{\n"
-    "   FragColor = color;\n"
+    "   FragColor = vec4(vertexColor,1.0);\n"
     "}\n\0";
 
 const char* fragShaderSource2 = "#version 330 core\n"
@@ -124,9 +125,9 @@ int main() {
 
     float vertices[] = {
         //first triangle
-      0.5f,0.5f,0.0f,
-      0.5f,-0.5f,0.0f,
-     -0.5f,-0.5f,0.0f,
+      0.0f,0.5f,0.0f,       1.0f,0.0f,0.0f,
+      0.5f,-0.5f,0.0f,      0.0f,1.0f,0.0f,
+     -0.5f,-0.5f,0.0f,      0.0f,0.0f,1.0f
     };
 
     float vert[] = {
@@ -154,10 +155,16 @@ int main() {
 
     glBindBuffer(GL_ARRAY_BUFFER,VBO);
     glBufferData(GL_ARRAY_BUFFER,sizeof(vertices),vertices,GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,3*sizeof(float),(void*)0);
+    
+    //position
+    glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,6*sizeof(float),(void*)0);
     glEnableVertexAttribArray(0);
     
+    //color
+    glVertexAttribPointer(1,3,GL_FLOAT,GL_FALSE,6*sizeof(float),(void*)(3*sizeof(float)));
+    glEnableVertexAttribArray(1);
+    
+    //unbind buffers
     glBindBuffer(GL_ARRAY_BUFFER,0);
     glBindVertexArray(0);
 
@@ -196,8 +203,6 @@ int main() {
         //update frag shader
         float currtime = glfwGetTime();
         float colorval = (sin(currtime)/2.0f) + 0.5f;
-        int colorLoc = glGetUniformLocation(shaderProgram,"color");
-        glUniform4f(colorLoc,0.0f,colorval,0.0f,1.0f);
 
         glBindVertexArray(VAOone);
         glDrawArrays(GL_TRIANGLES,0,3);
@@ -207,9 +212,8 @@ int main() {
         int colorLoc2 = glGetUniformLocation(shaderProgram2,"color");
         glUniform4f(colorLoc2,colorval,0.0f,0.0f,1.0f);
 
-
-        glBindVertexArray(VAOtwo);
-        glDrawArrays(GL_TRIANGLES,0,3);
+       // glBindVertexArray(VAOtwo);
+     //   glDrawArrays(GL_TRIANGLES,0,3);
         
         glfwSwapBuffers(window);
         glfwPollEvents();
