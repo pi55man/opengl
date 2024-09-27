@@ -296,6 +296,7 @@ CMakeFiles/main.dir/src/main.cpp.o: /home/arin/code/opengl/src/main.cpp \
   /usr/include/alloca.h \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \
+  /usr/include/assert.h \
   /usr/include/c++/13/backward/binders.h \
   /usr/include/c++/13/bits/alloc_traits.h \
   /usr/include/c++/13/bits/allocator.h \
@@ -368,9 +369,11 @@ CMakeFiles/main.dir/src/main.cpp.o: /home/arin/code/opengl/src/main.cpp \
   /usr/include/c++/13/iosfwd \
   /usr/include/c++/13/iostream \
   /usr/include/c++/13/istream \
+  /usr/include/c++/13/math.h \
   /usr/include/c++/13/new \
   /usr/include/c++/13/ostream \
   /usr/include/c++/13/stdexcept \
+  /usr/include/c++/13/stdlib.h \
   /usr/include/c++/13/streambuf \
   /usr/include/c++/13/string \
   /usr/include/c++/13/system_error \
@@ -381,7 +384,9 @@ CMakeFiles/main.dir/src/main.cpp.o: /home/arin/code/opengl/src/main.cpp \
   /usr/include/errno.h \
   /usr/include/features-time64.h \
   /usr/include/features.h \
+  /usr/include/limits.h \
   /usr/include/linux/errno.h \
+  /usr/include/linux/limits.h \
   /usr/include/locale.h \
   /usr/include/math.h \
   /usr/include/pthread.h \
@@ -390,6 +395,8 @@ CMakeFiles/main.dir/src/main.cpp.o: /home/arin/code/opengl/src/main.cpp \
   /usr/include/stdint.h \
   /usr/include/stdio.h \
   /usr/include/stdlib.h \
+  /usr/include/string.h \
+  /usr/include/strings.h \
   /usr/include/time.h \
   /usr/include/wchar.h \
   /usr/include/wctype.h \
@@ -408,12 +415,15 @@ CMakeFiles/main.dir/src/main.cpp.o: /home/arin/code/opengl/src/main.cpp \
   /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
   /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
+  /usr/include/x86_64-linux-gnu/bits/local_lim.h \
   /usr/include/x86_64-linux-gnu/bits/locale.h \
   /usr/include/x86_64-linux-gnu/bits/long-double.h \
   /usr/include/x86_64-linux-gnu/bits/math-vector.h \
   /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
   /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
   /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+  /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
   /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
@@ -459,11 +469,13 @@ CMakeFiles/main.dir/src/main.cpp.o: /home/arin/code/opengl/src/main.cpp \
   /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
   /usr/include/x86_64-linux-gnu/bits/typesizes.h \
   /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
+  /usr/include/x86_64-linux-gnu/bits/uio_lim.h \
   /usr/include/x86_64-linux-gnu/bits/waitflags.h \
   /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
   /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h \
   /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/bits/xopen_lim.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/atomic_word.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/c++allocator.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
@@ -481,10 +493,29 @@ CMakeFiles/main.dir/src/main.cpp.o: /home/arin/code/opengl/src/main.cpp \
   /usr/include/x86_64-linux-gnu/sys/select.h \
   /usr/include/x86_64-linux-gnu/sys/single_threaded.h \
   /usr/include/x86_64-linux-gnu/sys/types.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/emmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/mm_malloc.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/mmintrin.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h \
-  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/xmmintrin.h \
+  /usr/local/include/stb_image.h
 
+
+/usr/local/include/stb_image.h:
+
+/usr/include/x86_64-linux-gnu/bits/xopen_lim.h:
+
+/usr/include/limits.h:
+
+/usr/include/x86_64-linux-gnu/bits/uio_lim.h:
+
+/usr/include/c++/13/stdlib.h:
+
+/usr/include/assert.h:
 
 /home/arin/code/opengl/src/main.cpp:
 
@@ -495,6 +526,8 @@ CMakeFiles/main.dir/src/main.cpp.o: /home/arin/code/opengl/src/main.cpp \
 /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h:
 
@@ -524,6 +557,8 @@ CMakeFiles/main.dir/src/main.cpp.o: /home/arin/code/opengl/src/main.cpp \
 
 /usr/include/x86_64-linux-gnu/bits/waitflags.h:
 
+/usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h:
+
 /usr/include/x86_64-linux-gnu/bits/typesizes.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
@@ -539,6 +574,8 @@ CMakeFiles/main.dir/src/main.cpp.o: /home/arin/code/opengl/src/main.cpp \
 /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/local_lim.h:
 
 /usr/include/x86_64-linux-gnu/bits/wchar.h:
 
@@ -577,6 +614,8 @@ CMakeFiles/main.dir/src/main.cpp.o: /home/arin/code/opengl/src/main.cpp \
 /usr/include/x86_64-linux-gnu/bits/setjmp.h:
 
 /usr/include/x86_64-linux-gnu/bits/select.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/mm_malloc.h:
 
 /usr/include/x86_64-linux-gnu/bits/sched.h:
 
@@ -648,6 +687,8 @@ CMakeFiles/main.dir/src/main.cpp.o: /home/arin/code/opengl/src/main.cpp \
 
 /home/arin/code/opengl/src/Shader.cpp:
 
+/usr/include/c++/13/math.h:
+
 /usr/include/c++/13/bits/ostream_insert.h:
 
 /usr/include/x86_64-linux-gnu/bits/cpu-set.h:
@@ -691,6 +732,8 @@ CMakeFiles/main.dir/src/main.cpp.o: /home/arin/code/opengl/src/main.cpp \
 /usr/include/c++/13/bits/stl_iterator_base_funcs.h:
 
 /usr/include/asm-generic/errno.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/mmintrin.h:
 
 /usr/include/c++/13/cwchar:
 
@@ -818,7 +861,11 @@ CMakeFiles/main.dir/src/main.cpp.o: /home/arin/code/opengl/src/main.cpp \
 
 /usr/include/c++/13/bits/utility.h:
 
+/usr/lib/gcc/x86_64-linux-gnu/13/include/emmintrin.h:
+
 /usr/include/c++/13/bits/vector.tcc:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/xmmintrin.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
 
@@ -853,6 +900,8 @@ CMakeFiles/main.dir/src/main.cpp.o: /home/arin/code/opengl/src/main.cpp \
 /usr/include/c++/13/bits/functional_hash.h:
 
 /usr/include/errno.h:
+
+/usr/include/x86_64-linux-gnu/bits/posix1_lim.h:
 
 /usr/include/c++/13/cctype:
 
@@ -913,6 +962,10 @@ CMakeFiles/main.dir/src/main.cpp.o: /home/arin/code/opengl/src/main.cpp \
 /usr/include/pthread.h:
 
 /usr/include/sched.h:
+
+/usr/include/x86_64-linux-gnu/bits/posix2_lim.h:
+
+/usr/include/linux/limits.h:
 
 /usr/include/stdint.h:
 

@@ -161,4 +161,18 @@ CMakeFiles/main.dir/src/main.cpp.o: /home/arin/code/opengl/src/main.cpp \
  /usr/include/c++/13/bits/basic_ios.tcc \
  /usr/include/c++/13/bits/ostream.tcc /usr/include/c++/13/istream \
  /usr/include/c++/13/bits/istream.tcc \
- /home/arin/code/opengl/src/Shader.hpp
+ /home/arin/code/opengl/src/Shader.hpp /usr/local/include/stb_image.h \
+ /usr/include/c++/13/stdlib.h /usr/include/string.h \
+ /usr/include/strings.h /usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h \
+ /usr/include/limits.h /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
+ /usr/include/x86_64-linux-gnu/bits/local_lim.h \
+ /usr/include/linux/limits.h \
+ /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
+ /usr/include/x86_64-linux-gnu/bits/xopen_lim.h \
+ /usr/include/x86_64-linux-gnu/bits/uio_lim.h /usr/include/c++/13/math.h \
+ /usr/include/assert.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/emmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/xmmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/mmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/mm_malloc.h

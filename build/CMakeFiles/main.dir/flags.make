@@ -5,13 +5,13 @@
 # compile CXX with /usr/bin/c++
 C_DEFINES = 
 
-C_INCLUDES = -I/home/arin/code/opengl/include
+C_INCLUDES = -I/home/arin/code/opengl/include -I/usr/lib/include
 
 C_FLAGS = 
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/arin/code/opengl/include
+CXX_INCLUDES = -I/home/arin/code/opengl/include -I/usr/lib/include
 
 CXX_FLAGS = -std=gnu++11
 
