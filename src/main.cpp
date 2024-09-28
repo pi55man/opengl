@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h> 
 #include <iostream>
 #include "Shader.hpp"
+
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 //runs when window size is changed and sets the viewport to the current width and height
@@ -105,12 +106,13 @@ int main() {
     unsigned int tex;
     glGenTextures(1,&tex);
     glBindTexture(GL_TEXTURE_2D,tex);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_MIRRORED_REPEAT);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
     
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 
+    stbi_set_flip_vertically_on_load(true);
     int width, height, nrChannels;
     unsigned char* data = stbi_load("/home/arin/code/opengl/flower.jpg", &width, &height, &nrChannels,0);
     if(!data){
@@ -122,7 +124,6 @@ int main() {
         glGenerateMipmap(GL_TEXTURE_2D);
     }
     stbi_image_free(data);
-
 
     //-------------render loop---------------
     while(!glfwWindowShouldClose(window)){
@@ -140,7 +141,6 @@ int main() {
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-
     glDeleteVertexArrays(1,&VAOone);
     glDeleteBuffers(1,&VBO);
     glDeleteBuffers(1,&EBO);
