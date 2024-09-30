@@ -1,11 +1,12 @@
-#include <cmath>
 #include <glad/glad.h> 
 #include <GLFW/glfw3.h> 
 #include <iostream>
 #include "Shader.hpp"
+#include "Image.hpp"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
+
 //runs when window size is changed and sets the viewport to the current width and height
 void framebuffer_size_callback(GLFWwindow* window, int width, int height){
     glViewport(0,0,width,height);
@@ -26,7 +27,7 @@ int main() {
         return -1;
     }
 
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);  // OpenGL 3.x
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);  // opengl 3.x
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
@@ -49,7 +50,7 @@ int main() {
 
     float vertices[] = {
         // positions          // colors           // texture coords
-         0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,    1.0f, 1.0f, // top right
+         0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
          0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
         -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
         -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
@@ -106,6 +107,7 @@ int main() {
     unsigned int tex;
     glGenTextures(1,&tex);
     glBindTexture(GL_TEXTURE_2D,tex);
+
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_MIRRORED_REPEAT);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
     
@@ -113,18 +115,10 @@ int main() {
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 
     stbi_set_flip_vertically_on_load(true);
-    int width, height, nrChannels;
-    unsigned char* data = stbi_load("/home/arin/code/opengl/flower.jpg", &width, &height, &nrChannels,0);
-    if(!data){
-        std::cout<<"image loading failed: "<< stbi_failure_reason()<<std::endl;
-    } else {
-        std::cout<<"image loaded"<<std::endl;
-        std::cout<<nrChannels<<std::endl;
-        glTexImage2D(GL_TEXTURE_2D,0,GL_RGB,width,height,0,GL_RGB,GL_UNSIGNED_BYTE,data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    stbi_image_free(data);
 
+    Image flower("/home/arin/code/opengl/flower.jpg",0);
+    glTexImage2D(GL_TEXTURE_2D,0,GL_RGB,flower.width,flower.height,0,GL_RGB,GL_UNSIGNED_BYTE,flower.load());
+    glGenerateMipmap(GL_TEXTURE_2D);
     //-------------render loop---------------
     while(!glfwWindowShouldClose(window)){
         processInput(window);

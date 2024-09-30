@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/main.dir/src/Image.cpp.o"
+  "CMakeFiles/main.dir/src/Image.cpp.o.d"
   "CMakeFiles/main.dir/src/Shader.cpp.o"
   "CMakeFiles/main.dir/src/Shader.cpp.o.d"
   "CMakeFiles/main.dir/src/glad.c.o"

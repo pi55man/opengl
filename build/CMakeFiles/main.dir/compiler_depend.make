@@ -291,6 +291,7 @@ CMakeFiles/main.dir/src/glad.c.o: /home/arin/code/opengl/src/glad.c \
 CMakeFiles/main.dir/src/main.cpp.o: /home/arin/code/opengl/src/main.cpp \
   /home/arin/code/opengl/include/KHR/khrplatform.h \
   /home/arin/code/opengl/include/glad/glad.h \
+  /home/arin/code/opengl/src/Image.hpp \
   /home/arin/code/opengl/src/Shader.hpp \
   /usr/include/GLFW/glfw3.h \
   /usr/include/alloca.h \
@@ -920,6 +921,8 @@ CMakeFiles/main.dir/src/main.cpp.o: /home/arin/code/opengl/src/main.cpp \
 /usr/include/c++/13/iostream:
 
 /usr/include/c++/13/initializer_list:
+
+/home/arin/code/opengl/src/Image.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h:
 
