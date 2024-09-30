@@ -22,6 +22,7 @@ int success;
 char infolog[512];
 
 int main() {
+
     if (!glfwInit()) {
         std::cerr << "Failed to initialize GLFW" << std::endl;
         return -1;
@@ -48,7 +49,7 @@ int main() {
     glViewport(0,0,800,600);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-    float vertices[] = {
+    float recVert[] = {
         // positions          // colors           // texture coords
          0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
          0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
@@ -72,7 +73,7 @@ int main() {
     glBindVertexArray(VAOone);
     
     glBindBuffer(GL_ARRAY_BUFFER,VBO);
-    glBufferData(GL_ARRAY_BUFFER,sizeof(vertices),vertices,GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER,sizeof(recVert),recVert,GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(indices),indices,GL_STATIC_DRAW);
@@ -104,37 +105,67 @@ int main() {
     //-------------creates shader-----------
     Shader shader("/home/arin/code/opengl/src/shaders/vertex_shader.vs","/home/arin/code/opengl/src/shaders/fragment_shader.fs");
     
+    stbi_set_flip_vertically_on_load(true);
     unsigned int tex;
+    unsigned int smile;
     glGenTextures(1,&tex);
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D,tex);
 
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_MIRRORED_REPEAT);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
     
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 
-    stbi_set_flip_vertically_on_load(true);
 
     Image flower("/home/arin/code/opengl/flower.jpg",0);
     glTexImage2D(GL_TEXTURE_2D,0,GL_RGB,flower.width,flower.height,0,GL_RGB,GL_UNSIGNED_BYTE,flower.load());
     glGenerateMipmap(GL_TEXTURE_2D);
+    flower.free();
+
+    glGenTextures(1,&smile);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D,smile);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
+    
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+
+
+    Image smiley("/home/arin/code/opengl/src/smiley.png",0);
+    glTexImage2D(GL_TEXTURE_2D,0,GL_RGB,smiley.width,smiley.height,0,GL_RGBA,GL_UNSIGNED_BYTE,smiley.load());
+    glGenerateMipmap(GL_TEXTURE_2D);
+    smiley.free();   
+
+    stbi_image_free(smiley.load());
+    glUniform1i(glad_glGetUniformLocation(shader.ID, "texture1"),0);
+    glUniform1i(glad_glGetUniformLocation(shader.ID, "texture2"),1);
     //-------------render loop---------------
     while(!glfwWindowShouldClose(window)){
         processInput(window);
 
-        glClearColor(0.5,0.1,0.8f,1.0f);
+        glClearColor(0.9,0.4,0.2f,1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+
+        shader.use();
+        glUniform1i(glad_glGetUniformLocation(shader.ID, "texture1"),0);
+        glUniform1i(glad_glGetUniformLocation(shader.ID, "texture2"),1);
+
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D,tex);
-        shader.use();
-        
+
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D,smile);
+
         glBindVertexArray(VAOone);
         glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,0);
-     
+
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
+
     glDeleteVertexArrays(1,&VAOone);
     glDeleteBuffers(1,&VBO);
     glDeleteBuffers(1,&EBO);

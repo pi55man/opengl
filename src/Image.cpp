@@ -13,7 +13,13 @@ unsigned char* Image::load(){
         std::cout<<"image loading failed, "<<stbi_failure_reason();
     }
     else{
+        this->data = data;
         return data;
     }
 
+}
+
+void Image::free(){
+
+    stbi_image_free(this->data);
 }
