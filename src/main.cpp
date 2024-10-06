@@ -164,6 +164,7 @@ int main() {
     glUniform1i(glad_glGetUniformLocation(shader.ID, "texture2"),1);
     //-------------render loop---------------
     while(!glfwWindowShouldClose(window)){
+//checks if escape is pressed and closes window
         std::string r = "range";
         processInput(window,shader);
 
@@ -192,6 +193,5 @@ int main() {
     return 0;
 }
 
-//checks if escape is pressed and closes window
 
 
