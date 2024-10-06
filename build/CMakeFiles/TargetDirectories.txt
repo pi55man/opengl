@@ -1,3 +1,0 @@
-/home/arin/code/opengl/build/CMakeFiles/main.dir
-/home/arin/code/opengl/build/CMakeFiles/edit_cache.dir
-/home/arin/code/opengl/build/CMakeFiles/rebuild_cache.dir
