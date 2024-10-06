@@ -11,13 +11,31 @@
 void framebuffer_size_callback(GLFWwindow* window, int width, int height){
     glViewport(0,0,width,height);
 }
-//checks if escape is pressed and closes window
-void processInput(GLFWwindow* window){
-    if(glfwGetKey(window, GLFW_KEY_ESCAPE)){
+
+void processInput(GLFWwindow* window, Shader& shader){
+    static std::string uniform = "range";
+    static GLint loc = glGetUniformLocation(shader.ID,"range");
+    
+    if(glfwGetKey(window, GLFW_KEY_ESCAPE)==GLFW_PRESS){
         glfwSetWindowShouldClose(window, true);
     }
-}
 
+    if(glfwGetKey(window, GLFW_KEY_UP)==GLFW_PRESS){
+        GLfloat params[1];
+        glGetUniformfv(shader.ID,loc,params);
+        if(params[0]<1.0f){
+        shader.setFloat(uniform,params[0]+=0.01f);
+        }
+    }
+
+    if(glfwGetKey(window, GLFW_KEY_DOWN)==GLFW_PRESS){
+        GLfloat params[1];
+        glGetUniformfv(shader.ID,loc,params);
+        if(params[0]>0.0f){
+            shader.setFloat(uniform,params[0]-=0.01f);
+        }
+    }
+}
 int success;
 char infolog[512];
 
@@ -140,18 +158,19 @@ int main() {
     smiley.free();   
 
     stbi_image_free(smiley.load());
+
+    shader.use();
     glUniform1i(glad_glGetUniformLocation(shader.ID, "texture1"),0);
     glUniform1i(glad_glGetUniformLocation(shader.ID, "texture2"),1);
     //-------------render loop---------------
     while(!glfwWindowShouldClose(window)){
-        processInput(window);
+        std::string r = "range";
+        processInput(window,shader);
 
-        glClearColor(0.9,0.4,0.2f,1.0f);
+        glClearColor(0.0,0.05,0.1f,1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         shader.use();
-        glUniform1i(glad_glGetUniformLocation(shader.ID, "texture1"),0);
-        glUniform1i(glad_glGetUniformLocation(shader.ID, "texture2"),1);
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D,tex);
@@ -172,3 +191,7 @@ int main() {
     glfwTerminate(); 
     return 0;
 }
+
+//checks if escape is pressed and closes window
+
+
