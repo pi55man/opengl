@@ -1,6 +1,15 @@
 #include <glad/glad.h> 
 #include <GLFW/glfw3.h> 
+#include <glm/ext/matrix_float3x4.hpp>
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/ext/vector_float3.hpp>
+#include <glm/trigonometric.hpp>
 #include <iostream>
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 #include "Shader.hpp"
 #include "Image.hpp"
 
@@ -11,6 +20,7 @@
 void framebuffer_size_callback(GLFWwindow* window, int width, int height){
     glViewport(0,0,width,height);
 }
+
 
 void processInput(GLFWwindow* window, Shader& shader){
     static std::string uniform = "range";
@@ -86,9 +96,9 @@ int main() {
     unsigned int EBO;
     glGenBuffers(1,&EBO);
 
-    unsigned int VAOone;
-    glGenVertexArrays(1,&VAOone);
-    glBindVertexArray(VAOone);
+    unsigned int VAO;
+    glGenVertexArrays(1,&VAO);
+    glBindVertexArray(VAO);
     
     glBindBuffer(GL_ARRAY_BUFFER,VBO);
     glBufferData(GL_ARRAY_BUFFER,sizeof(recVert),recVert,GL_STATIC_DRAW);
@@ -162,14 +172,30 @@ int main() {
     shader.use();
     glUniform1i(glad_glGetUniformLocation(shader.ID, "texture1"),0);
     glUniform1i(glad_glGetUniformLocation(shader.ID, "texture2"),1);
+
+    glm::mat4 trans = glm::mat4(1.0f);
+    trans = glm::rotate(trans,glm::radians(90.0f),glm::vec3(0.0,0.0,1.0));
+    trans = glm::scale(trans, glm::vec3(2.0,2.0,2.0));
+
+
+    unsigned int transloc = glad_glGetUniformLocation(shader.ID, "transform");
+    glUniformMatrix4fv(transloc, 1, GL_FALSE, glm::value_ptr(trans));
+
     //-------------render loop---------------
+    //checks if escape is pressed and closes window
     while(!glfwWindowShouldClose(window)){
-//checks if escape is pressed and closes window
-        std::string r = "range";
+       std::string r = "range";
         processInput(window,shader);
 
         glClearColor(0.0,0.05,0.1f,1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+            glm::mat4 trans = glm::mat4(1.0f);
+            trans = glm::translate(trans, glm::vec3(0.5,-0.5,0.0));
+            trans = glm::rotate(trans,(float)glfwGetTime(),glm::vec3(0.0,0.0,1.0)* glm::sin(glm::vec3(0.0,0.0,1.0), 90.0f));
+
+    unsigned int transloc = glad_glGetUniformLocation(shader.ID, "transform");
+    glUniformMatrix4fv(transloc, 1, GL_FALSE, glm::value_ptr(trans));
+
 
         shader.use();
 
@@ -179,14 +205,14 @@ int main() {
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D,smile);
 
-        glBindVertexArray(VAOone);
+        glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,0);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
-    glDeleteVertexArrays(1,&VAOone);
+    glDeleteVertexArrays(1,&VAO);
     glDeleteBuffers(1,&VBO);
     glDeleteBuffers(1,&EBO);
     glfwTerminate(); 
