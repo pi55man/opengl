@@ -191,7 +191,7 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT);
             glm::mat4 trans = glm::mat4(1.0f);
             trans = glm::translate(trans, glm::vec3(0.5,-0.5,0.0));
-            trans = glm::rotate(trans,(float)glfwGetTime(),glm::vec3(0.0,0.0,1.0)* glm::sin(glm::vec3(0.0,0.0,1.0), 90.0f));
+    trans = glm::rotate(trans,glm::radians(90.0f),glm::vec3(0.0,0.0,1.0));
 
     unsigned int transloc = glad_glGetUniformLocation(shader.ID, "transform");
     glUniformMatrix4fv(transloc, 1, GL_FALSE, glm::value_ptr(trans));
@@ -218,6 +218,3 @@ int main() {
     glfwTerminate(); 
     return 0;
 }
-
-
-
